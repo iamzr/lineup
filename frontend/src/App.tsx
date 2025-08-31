@@ -35,7 +35,7 @@ function User() {
       <h2>User Info</h2>
       <label>
         User ID:
-        <input type="number" value={id || ''} onChange={handleChange} min={1} max={12} />
+        <input type="number" value={id || ''} onChange={handleChange} min={0} />
       </label>
       {loading && <p>Loading...</p>}
       {error && <p style={{color: 'red'}}>{error}</p>}

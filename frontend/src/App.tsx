@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams, useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from './config';
+import { BACKEND_API_URL } from './config';
 
 function User() {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +13,7 @@ function User() {
     if (!id) return;
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE_URL}/users/${id}`)
+    fetch(`${BACKEND_API_URL}/users/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('User not found');
         return res.json();
@@ -54,8 +54,8 @@ function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/user/:id" element={<User />} />
-        <Route path="*" element={<div><h1>React App</h1><p>Go to /user/2 for example.</p></div>} />
+        <Route path="/users/:id" element={<User />} />
+        <Route path="*" element={<div><h1>React App</h1><p>Go to /users/2 for example.</p></div>} />
       </Routes>
     </Router>
   );

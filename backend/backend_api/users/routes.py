@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Path
+from fastapi import APIRouter, Path, Depends
 
-from app.users import client
-from app.users.schemas import UserResponse
+from backend_api.users.client import UserApiClient
+from backend_api.users.dependencies import get_user_api_client
+from backend_api.users.schemas import UserResponse
 
 router = APIRouter(
     prefix="/users",
@@ -11,11 +12,15 @@ router = APIRouter(
 
 
 @router.get("/{user_id}", tags=["users"])
-async def get_user(user_id: int = Path(..., title="User ID")) -> UserResponse:
+async def get_user(
+    user_id: int = Path(title="User ID"),
+    client: UserApiClient = Depends(get_user_api_client),
+) -> UserResponse:
     """
     Fetch user details from a third-party API.
 
     :param user_id: ID of the user to fetch
+    :param client: UserApiClient instance for making API requests
     :return: UserResponse object containing user details
     """
     res = await client.get_user(user_id)

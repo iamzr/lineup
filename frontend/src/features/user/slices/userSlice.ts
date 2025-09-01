@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { getUserById } from './services/userApi';
-import type { UserInfo } from './types/user';
+import { getUserById } from '../services/userApi';
+import type { UserInfo } from '../types/user';
 
 // Define the state shape
 interface UserState {

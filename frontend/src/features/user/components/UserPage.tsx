@@ -1,12 +1,12 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { userUser } from '../hooks/userUser';
+import { useUser } from '../hooks/useUser';
 
 export default function UserPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { user, loading, error } = userUser(id);
+  const { user, loading, error } = useUser(id);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     navigate(`/users/${e.target.value}`);

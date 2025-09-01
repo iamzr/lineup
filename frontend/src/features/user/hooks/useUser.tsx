@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { fetchUser, clearUser, clearError } from '../userSlice';
+import { fetchUser, clearUser, clearError } from '../slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../shared/hooks/redux';
 
-// Custom hook for fetching a user
 export function useUser(id?: string) {
   const dispatch = useAppDispatch();
   const { user, loading, error } = useAppSelector((state) => state.user);
@@ -16,7 +15,6 @@ export function useUser(id?: string) {
   return { user, loading, error };
 }
 
-// Hook for user actions
 export function useUserActions() {
   const dispatch = useAppDispatch();
 

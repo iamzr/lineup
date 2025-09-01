@@ -1,9 +1,15 @@
+import logging
+
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from app.users.routes import router as users_router
 
-app: FastAPI = FastAPI()
+from backend_api.lifespan import lifespan
+from backend_api.users.routes import router as users_router
+
+logger = logging.getLogger(__name__)
+
+app: FastAPI = FastAPI(lifespan=lifespan)
 
 # Read allowed origins from environment variable as comma-separated values
 allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
@@ -20,7 +26,6 @@ api_router = APIRouter(prefix="/api")
 api_router.include_router(users_router)
 
 app.include_router(api_router)
-
 
 # For local development
 if __name__ == "__main__":

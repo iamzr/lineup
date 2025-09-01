@@ -1,7 +1,20 @@
 from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+import os
 from app.users.routes import router as users_router
 
 app: FastAPI = FastAPI()
+
+# Read allowed origins from environment variable as comma-separated values
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=False,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 api_router = APIRouter(prefix="/api")
 api_router.include_router(users_router)

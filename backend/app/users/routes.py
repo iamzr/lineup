@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.get("/{user_id}", tags=["users"])
-async def get_user(user_id: int = Path(..., title="User ID")) -> UserResponse:
+async def get_user(user_id: int = Path(title="User ID")) -> UserResponse:
     """
     Fetch user details from a third-party API.
 

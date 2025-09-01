@@ -1,4 +1,4 @@
-import { BACKEND_API_URL } from '../../../config';
+import { BACKEND_API_URL } from '../../../app/config';
 import type { UserInfo } from '../types/user';
 
 export async function getUserById(id: string): Promise<UserInfo> {

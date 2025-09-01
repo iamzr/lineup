@@ -2,7 +2,7 @@ import aiohttp
 from fastapi import HTTPException
 from pydantic import ValidationError
 
-from backend_api.users.client import UserClientResponse, API_URL
+from users.client.schemas import UserClientResponse
 
 
 class UserApiClient:

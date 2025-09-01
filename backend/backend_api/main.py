@@ -1,25 +1,21 @@
-import logging
-
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
+from backend_api.config import get_settings
 from backend_api.lifespan import lifespan
 from backend_api.users.routes import router as users_router
 
-logger = logging.getLogger(__name__)
 
 app: FastAPI = FastAPI(lifespan=lifespan)
 
-# Read allowed origins from environment variable as comma-separated values
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+settings = get_settings()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=False,
-    allow_methods=["GET"],
-    allow_headers=["*"],
+    allow_origins=settings.cors_config.allow_origins,
+    allow_credentials=settings.cors_config.allow_credentials,
+    allow_methods=settings.cors_config.allow_methods,
+    allow_headers=settings.cors_config.allow_headers,
 )
 
 api_router = APIRouter(prefix="/api")

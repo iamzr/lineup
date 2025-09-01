@@ -1,21 +1,33 @@
-import React from 'react';
-import { getUserById } from '../services/userApi';
-import type { UserInfo } from '../types/user';
+import { useEffect } from 'react';
+import { fetchUser, clearUser, clearError } from '../userSlice';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/redux';
 
-export function userUser(id?: string) {
-  const [user, setUser] = React.useState<UserInfo | null>(null);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+// Custom hook for fetching a user
+export function useUser(id?: string) {
+  const dispatch = useAppDispatch();
+  const { user, loading, error } = useAppSelector((state) => state.user);
 
-  React.useEffect(() => {
-    if (!id) return;
-    setLoading(true);
-    setError(null);
-    getUserById(id)
-      .then(data => setUser(data))
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [id]);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchUser(id));
+    }
+  }, [id, dispatch]);
 
   return { user, loading, error };
+}
+
+// Hook for user actions
+export function useUserActions() {
+  const dispatch = useAppDispatch();
+
+  return {
+    fetchUser: (id: string) => dispatch(fetchUser(id)),
+    clearUser: () => dispatch(clearUser()),
+    clearError: () => dispatch(clearError()),
+  };
+}
+
+// Hook for just the user state (no automatic fetching)
+export function useUserState() {
+  return useAppSelector((state) => state.user);
 }

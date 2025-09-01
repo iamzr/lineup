@@ -1,19 +1,31 @@
+from typing import Optional
+
 import aiohttp
 from fastapi import HTTPException
 from pydantic import ValidationError
 
-from users.client.schemas import UserClientResponse
+from backend_api.users.client.schemas import UserClientResponse
 
 
 class UserApiClient:
-    def __init__(self, session: aiohttp.ClientSession, base_url: str) -> None:
-        self.base_url = base_url
+    def __init__(
+        self,
+        session: aiohttp.ClientSession,
+        base_url: str,
+        api_key: Optional[str] = None,
+    ) -> None:
         self.session = session
+        self.base_url = base_url
+        self.api_key = api_key
 
     async def get_user(self, user_id: int) -> UserClientResponse:
         url = f"{self.base_url}/users/{user_id}"
+        headers = {}
+        if self.api_key:
+            headers["x-api-key"] = self.api_key
+
         try:
-            async with self.session.get(url) as resp:
+            async with self.session.get(url, headers=headers) as resp:
                 if resp.status >= 400:
                     raise HTTPException(
                         status_code=resp.status, detail=await resp.text()

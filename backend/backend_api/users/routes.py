@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Path, Depends
 
-import backend_api.users.client.user_api
-from backend_api.users.client.user_api import UserApiClient
+from backend_api.users.client import UserApiClient
 from backend_api.users.dependencies import get_user_api_client
 from backend_api.users.schemas import UserResponse
 
@@ -24,17 +23,6 @@ async def get_user(
     :param client: UserApiClient instance for making API requests
     :return: UserResponse object containing user details
     """
-    if user_id <= 0:
-        return UserResponse(
-            id=user_id,
-            email=f"myemail{user_id}@gmail.com",
-            first_name=f"me{user_id}",
-            last_name="name",
-            avatar="https://reqres.in/img/faces/2-image.jpg"
-            if user_id % 2 == 0
-            else "https://www.google.com",
-        )
-
     res = await client.get_user(user_id)
 
     return UserResponse(

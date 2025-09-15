@@ -1,1 +1,6 @@
-export { default as userReducer, fetchUser, clearUser, clearError } from './slices/userSlice';
+export {
+  default as userReducer,
+  fetchUser,
+  clearUser,
+  clearError,
+} from "./slices/userSlice";

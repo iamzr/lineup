@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { fetchUser, clearUser, clearError } from '../slices/userSlice';
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks/redux';
+import { useEffect } from "react";
+import { fetchUser, clearUser, clearError } from "../slices/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks/redux";
 
 export function useUser(id?: string) {
   const dispatch = useAppDispatch();
@@ -8,7 +8,7 @@ export function useUser(id?: string) {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchUser(id));
+      void dispatch(fetchUser(id));
     }
   }, [id, dispatch]);
 

@@ -25,16 +25,6 @@ designed for containerized deployment with Docker and uv.
    fastapi run backend_api.main --port 8000 --host 0.0.0.0
    ```
 
-### Docker
-
-A docker compose setup is provided for easy deployment.
-
-1. Build and start the container:
-
-```bash
-   docker compose up --build
-   ```
-
 ## API Endpoints
 
 ### `GET /users/{user_id}`
